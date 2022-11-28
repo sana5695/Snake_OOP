@@ -1,34 +1,109 @@
-class Snake{
-    constructor(size, color, startPosition){
-        // инициализация змейки
-        // размер
-        // цвет
-        // начало
-        this.size = size;
-        this.color = color;
-        this.startPosition = startPosition;
+import Config from "./config.js";
+
+class Snake {
+    constructor() {
+
+        this.config = new Config();
+        this.x = 160;
+        this.y = 160;
+        this.dx = this.config.sizeCell;
+        this.dy = 0;
+        this.tails = [];
+        this.maxTails = 3;
+
+        this.control();
+
+    }
+    update(berry, score, canvas) {
+        this.x += this.dx;
+        this.y += this.dy;
+
+        if (this.x < 0) {
+            this.x = canvas.element.width - this.config.sizeCell;
+        } else if (this.x >= canvas.element.width) {
+            this.x = 0;
+        }
+
+        if (this.y < 0) {
+            this.y = canvas.element.height - this.config.sizeCell;
+        } else if (this.y >= canvas.element.height) {
+            this.y = 0;
+        }
+
+        this.tails.unshift({
+            x: this.x,
+            y: this.y
+        });
+
+        if (this.tails.length > this.maxTails) {
+            this.tails.pop();
+        }
+
+        this.tails.forEach((el, index) => {
+
+            if (el.x === berry.x && el.y === berry.y) {
+                this.maxTails++;
+                score.incScore();
+                berry.randomPosition();
+            }
+
+            for (let i = index + 1; i < this.tails.length; i++) {
+
+                if (el.x == this.tails[i].x && el.y == this.tails[i].y) {
+                    this.death();
+                    score.setToZero();
+                    berry.randomPosition();
+                }
+
+            }
+
+        });
+
     }
 
-    death(){
-        //логика проигрыша
+    draw(context) {
+
+        this.tails.forEach((el, index) => {
+            if (index == 0) {
+                context.fillStyle = "#FA0556";
+            } else {
+                context.fillStyle = "#A00034";
+            }
+            context.fillRect(el.x, el.y, this.config.sizeCell - 5, this.config.sizeCell - 5);
+        });
+
     }
 
-    update(){
-        //логика обновления
+    death() {
+
+        this.x = 160;
+        this.y = 160;
+        this.dx = this.config.sizeCell;
+        this.dy = 0;
+        this.tails = [];
+        this.maxTails = 3;
+
     }
 
-    draw() {
-        // отрисовка змейки
-        let coordinate = this.startPosition.join('');
-        const position = document.getElementsByClassName(coordinate);
-        position.classList.remove('block');
-        return position;
-    }
+    control() {
 
-    control(){
-        //обработка нажатий
+        document.addEventListener("keydown", (e) => {
+            if (e.code == "KeyW") {
+                this.dy = -this.config.sizeCell;
+                this.dx = 0;
+            } else if (e.code == "KeyA") {
+                this.dx = -this.config.sizeCell;
+                this.dy = 0;
+            } else if (e.code == "KeyS") {
+                this.dy = this.config.sizeCell;
+                this.dx = 0;
+            } else if (e.code == "KeyD") {
+                this.dx = this.config.sizeCell;
+                this.dy = 0;
+            }
+        });
+
     }
-    
 }
 
 export default Snake;

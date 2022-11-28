@@ -1,28 +1,18 @@
+import Config from "./config.js";
+
 class GameFiled {
-    constructor(hight, widht) {
-        this.hight = hight;
-        this.widht = widht;
-        //отричовка поля
+    constructor(heightFiled, widthFiled) {
+        this.config = new Config();
+        //console.log(document.getElementById("filed"));
+        this.element = document.getElementById("filed");
+        this.context = this.element.getContext( "2d" );
+
+        this.element.width = Number(widthFiled.value*this.config.sizeCell);
+        this.element.height = Number(heightFiled.value*this.config.sizeCell);
+        //console.log(document.getElementById("filed"))
+        //container.appendChild( this.element );
     }
     
-    draw(){
-
-        const filed = document.getElementById("filed")
-
-        filed.style.cssText = `grid-template-rows: repeat(${this.hight}, 25px);
-                               grid-template-columns: repeat(${this.widht}, 25px);`
-
-        for(let l = (this.widht-1); l>=0; l--){
-
-            for(let i = (this.hight-1); i>=0; i--){
-        
-                let div = document.createElement('div');
-                div.className = i+''+l+" block";
-                filed.insertAdjacentElement('afterbegin',div);
-        
-            }
-        }
-    }
 }
 
 export default GameFiled;

@@ -1,24 +1,25 @@
 class Score{
-    constructor(score){
-        // начальное количество очков
-        this._score = score;
+    constructor( scoreBlock, score = 0 ) {
+
+        this.scoreBlock = document.querySelector( scoreBlock );
+        this.score = score;
+
+        this.draw();
+
     }
     
-    draw(){
-        //отрисовка очков
-        return this._score
-    }
-
-    increase(){
-        //увеличение очков
-        this._score += 1
+    incScore() {
+        this.score++;
         this.draw();
     }
 
-    reset(){
-        // сброс очков
-        this._score = 0;
+    setToZero() {
+        this.score = 0;
         this.draw();
+    }
+
+    draw() {
+        this.scoreBlock.innerHTML = this.score;
     }
 
 }

@@ -1,16 +1,26 @@
+import Config from "./config.js";
+import { getRandomInt } from "./RandomFunction.js";
+
 class Apple {
-    constructor(color){
-        // инициализыция параметров
-        // цвет, размер
-        this.color = color;
+    constructor(canvas ){
+        this.x = 0;
+        this.y = 0;
+        this.canvas = canvas;
+
+        this.config = new Config();
+        this.randomPosition();
     }
 
-    draw(){
-        //ОТРИСОВКА ЯБЛОК
+    draw(context){
+        context.beginPath();
+        context.fillStyle = "#AFF034";
+        context.fillRect(this.x, this.y, this.config.sizeCell-5, this.config.sizeCell-5);
+        context.fill();
     }
 
-    getPosition(){
-        // позиция яблока
+    randomPosition(){
+        this.x = getRandomInt( 0, this.canvas.element.width / this.config.sizeCell ) * this.config.sizeCell;
+        this.y = getRandomInt( 0, this.canvas.element.height / this.config.sizeCell ) * this.config.sizeCell;
     }
 }
 
