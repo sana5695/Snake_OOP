@@ -25,7 +25,7 @@ class Main {
     
 
     update() {
-        // console.log(1)
+        // console.log(12)
         this.snake.update(this.apple, this.score, this.gameField);
         //console.log(1)
         //обновленние данных
