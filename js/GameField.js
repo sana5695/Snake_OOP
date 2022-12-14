@@ -1,7 +1,7 @@
 import Config from "./config.js";
 
 class GameField {
-    constructor(button1) {
+    constructor(button1, button3) {
         this.heightField = document.querySelector('.hight')
         this.widthField = document.querySelector('.width')
         
@@ -17,6 +17,12 @@ class GameField {
             
             this.draw();
         })
+
+        this.button3 = button3.addEventListener('click', () => {
+
+            this.draw();
+        })
+
 
 
 

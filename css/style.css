@@ -11,8 +11,11 @@ body {
 
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content:start;
 	align-items: center;
+}
+input, button{
+	margin-top: 20px;
 }
 
 #game-canvas {
@@ -59,6 +62,8 @@ body {
 	
 }
 
+
+
 .snakeBody{
 	background-color: #1ca044;
 }
@@ -66,11 +71,12 @@ body {
 	background-color: #00ff4c;
 }
 
-.canvas-wrapper {
-	background-color: #161618;
-	border-radius: 5px;
-	border: 10px solid #4b4343;
-	box-shadow: 0px 0px 40px 10px #161618;
+
+.apple{
+	background-color: red;
+}
+.high-score{
+	color: aliceblue;
 }
 	/*background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.2'%3E%3Ccircle cx='8' cy='8' r='4' fill='%23525053'/%3E%3C/g%3E%3C/svg%3E%0A");
 }

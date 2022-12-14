@@ -1,13 +1,12 @@
 
 export default class Config {
 
-	constructor() {
+	constructor(button1, button2, button3) {
 		this.step = 0;
 		this.maxStep = 30;
 		this.sizeCell = 28;
-		//this.sizeBerry = this.sizeCell / 4;
-		//this.hightField = btn.addEventListener('click', () => {return(3)});
-		//this.widthField = 3;
+		
+		
 	}
 
 }

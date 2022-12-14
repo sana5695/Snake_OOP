@@ -24,7 +24,7 @@ class GameLoop{
             return;
         }
         this.config.step = 0;
-        console.log('loop')
+       // console.log('loop')
         
         this.update();
         this.draw();

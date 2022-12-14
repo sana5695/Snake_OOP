@@ -3,11 +3,44 @@ import Config from "./config.js";
 
 
 class Snake {
-    constructor() {
+    constructor(button3, appleX, appleY, stop, remove, score, setZero) {
         this.config = new Config();
-        this.position = [4, 4]
+        this.score = score
+        this.setZero = setZero
+        this.remove = remove
+        this.stop = stop
+        this.dx
+        this.dy
+        this.appleX = appleX
+        this.appleY = appleY
+        this.apple = document.querySelector('.apple')
+        this.button3 = button3.addEventListener('click', () => {
+            
+            this.hight = document.querySelector('.hight').value;
+            this.width = document.querySelector('.width').value;
+
+            this.position = [Math.round(this.width / 2), Math.round(this.hight / 2)]
+            console.log(this.position)
+
+            this.snakeBody = [document.querySelector('[posX = "' + this.position[0] + '"][posY = "' + this.position[1] + '"]'),
+                document.querySelector('[posX = "' + (this.position[0] - 1) + '"][posY = "' + this.position[1] + '"]'),
+                document.querySelector('[posX = "' + (this.position[0] - 2) + '"][posY = "' + this.position[1] + '"]')
+            ]
+            for (let i = 0; i < this.snakeBody.length; i++) {
+                this.snakeBody[i].classList.add("snakeBody");
+            }
+            this.snakeBody[0].classList.add("snakeHead");
+
+            this.snakeCoordinates
+            this.direction = 'right'
+            setZero()
+            
+        })
+        
 
         this.control();
+        this.steps = true
+        
         
 
     }
@@ -18,28 +51,105 @@ class Snake {
 
     }
 
+
     draw() {
 
-        let snakeBody = [document.querySelector('[posX = "' + this.position[0] + '"][posY = "' + this.position[1] + '"]'),
-            document.querySelector('[posX = "' + (this.position[0] - 1) + '"][posY = "' + this.position[1] + '"]'),
-            document.querySelector('[posX = "' + (this.position[0] - 2) + '"][posY = "' + this.position[1] + '"]')
-        ]
-        //console.log (snakeBody)
-       for (let i = 0; i < snakeBody.length; i++) {
-            snakeBody[i].classList.add("snakeBody");
+        //console.groupCollapsed(this.hight)
+        //console.log(this.)
+        
+        let apple = document.querySelector('.apple')
+        this.snakeCoordinates = [Number(this.snakeBody[0].getAttribute('posX')), Number(this.snakeBody[0].getAttribute('posY'))]
+        console.log(this.snakeCoordinates)
+        console.log(this.hight)
+        this.snakeBody[0].classList.remove('snakeHead');
+        this.snakeBody[this.snakeBody.length - 1].classList.remove('snakeBody');
+        this.snakeBody.pop();
+        if (this.direction == 'right') {
+            if (this.snakeCoordinates[0] < this.width) {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${(+this.snakeCoordinates[0] + 1)}"][posY = "${this.snakeCoordinates[1]}"]`))
+            } else {
+                this.snakeBody.unshift(document.querySelector(`[posX = "1"][posY = "${this.snakeCoordinates[1]}"]`))
+            };
+        } else if (this.direction == 'left') {
+            if (this.snakeCoordinates[0] > 1) {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${(+this.snakeCoordinates[0] - 1)}"][posY = "${this.snakeCoordinates[1]}"]`))
+            } else {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${this.width}" ][posY = "${this.snakeCoordinates[1]}"`))
+            };
+        } else if (this.direction == 'down') {
+            if (this.snakeCoordinates[1] > 1) {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${this.snakeCoordinates[0]}"][posY = "${(+this.snakeCoordinates[1] - 1)}"]`))
+            } else {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${this.snakeCoordinates[0]}"][posY = "${this.hight}"]`))
+            };
+        } else if (this.direction == 'up') {
+            if (this.snakeCoordinates[1] < this.hight) {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${this.snakeCoordinates[0]}"][posY = "${(+this.snakeCoordinates[1] + 1)}"]`))
+            } else {
+                this.snakeBody.unshift(document.querySelector(`[posX = "${this.snakeCoordinates[0]}"][posY = "1"]`))
+            };
+        } else if (this.direction == 'stop'){this.snakeBody.unshift(document.querySelector(`[posX = "${this.snakeCoordinates[0]}"][posY = "${(this.snakeCoordinates[1])}"]`))}
+
+        if (this.snakeBody[0].getAttribute('posX') == apple.getAttribute('posX') && this.snakeBody[0].getAttribute('posY') == apple.getAttribute('posY')) {
+            this.remove()
+            //this.apple.classList.remove('apple');
+            let x = this.snakeBody[this.snakeBody.length - 1].getAttribute('posX');
+            let y = this.snakeBody[this.snakeBody.length - 1].getAttribute('posY');
+            this.snakeBody.push(document.querySelector('[posX ="' + x + '"][posY ="' + y + '"]'));
+            this.score()
+            //createApple();
+            //score++;
+            //input.value = `Счет: ${ score }`;
+
+            //localStorage.setItem('number', score.toString());
+
         }
-        snakeBody[0].classList.add("snakeHead");
+
+        if (this.snakeBody[0].classList.contains('snakeBody')) {
+            console.log('!!!!!')
+            this.stop()
+            
+              //  alert(`Игра оконченаю. Счет: ${score}`);
+            //}//, 200)
+
+            //clearInterval(interval);
+            //snakeBody[0].style.backgroundColor = "blue";
+
+        }
+
+        this.snakeBody[0].classList.add('snakeHead');
+        for (let i = 0; i < this.snakeBody.length; i++) {
+            this.snakeBody[i].classList.add("snakeBody");
+        }
+        this.steps = true;
+
 
     }
 
-    death() {
-
-
-
-    }
 
     control() {
-
+        document.addEventListener("keydown", (e) => {
+            //console.log(e.code)
+            if (this.steps == true) {
+                if (e.keyCode == 37 && this.direction != 'right') {
+                    this.direction = 'left';
+                    this.steps = false;
+                    console.log('left');
+                } else if (e.keyCode == 38 && this.direction != 'down') {
+                    this.direction = 'up';
+                    this.steps = false;
+                    // console.log('up');
+                } else if (e.keyCode == 39 && this.direction != 'left') {
+                    this.direction = 'right';
+                    this.steps = false;
+                    // console.log('right');
+                } else if (e.keyCode == 40 && this.direction != 'up') {
+                    this.direction = 'down';
+                    this.steps = false;
+                    //console.log('down');
+                }
+            }
+        });
 
     }
 }

@@ -8,15 +8,18 @@ import Apple from './Apple.js';
 
 import Score from './Score.js';
 
-class Main {
-    constructor(button1, button2, button3) {
+import Config from "./config.js";
 
-        this.gameField = new GameField(button1);
-      
-        this.snake = new Snake();
-        this.apple = new Apple(this.gameField);
-        this.score = new Score(".game-score .score-count", 0);
-        new GameLoop(this.update.bind(this), this.draw.bind(this), button3, button2);
+class Main {
+    constructor(button1, button2, button3, highScore) {
+
+        this.gameField = new GameField(button2, button3);
+        this.config = new Config(button1, button2, button3)
+        this.apple = new Apple(button2);
+        this.score = new Score(".game-score .score-count", 0, highScore);
+        this.snake = new Snake(button3, this.apple.x, this.apple.y, this.stop.bind(this), this.apple.remove.bind(this), this.score.incScore.bind(this.score), this.score.setToZero.bind(this.score) );
+        
+        this.gameLoop = new GameLoop(this.update.bind(this), this.draw.bind(this), button3, button2, );
         
 
 
@@ -34,15 +37,22 @@ class Main {
 
     draw() {
         //this.gameField.context.clearRect(0, 0, this.gameField.element.width, this.gameField.element.height);
-        
-        this.gameField.draw()
+        this.apple.draw();
+        //this.gameField.draw()
         this.snake.draw();
-        //this.apple.draw(this.gameField.context);
+        
+        
     }
+
+    stop(){this.gameLoop.cancelAnimate()}
 
 }
 const btn1 = document.querySelector('.btn1');
 const btn2 = document.querySelector('.btn2');
 const btn3 = document.querySelector('.btn3');
+let record = document.querySelector('.local')
+let highScore = +localStorage.getItem('Score')
+record.innerHTML = highScore
+console.log(highScore)
 
-new Main(btn1, btn2, btn3);
+new Main(btn1, btn2, btn3, highScore);
