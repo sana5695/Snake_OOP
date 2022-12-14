@@ -54,9 +54,6 @@ class Snake {
 
     draw() {
 
-        //console.groupCollapsed(this.hight)
-        //console.log(this.)
-        
         let apple = document.querySelector('.apple')
         this.snakeCoordinates = [Number(this.snakeBody[0].getAttribute('posX')), Number(this.snakeBody[0].getAttribute('posY'))]
         console.log(this.snakeCoordinates)
@@ -92,16 +89,10 @@ class Snake {
 
         if (this.snakeBody[0].getAttribute('posX') == apple.getAttribute('posX') && this.snakeBody[0].getAttribute('posY') == apple.getAttribute('posY')) {
             this.remove()
-            //this.apple.classList.remove('apple');
             let x = this.snakeBody[this.snakeBody.length - 1].getAttribute('posX');
             let y = this.snakeBody[this.snakeBody.length - 1].getAttribute('posY');
             this.snakeBody.push(document.querySelector('[posX ="' + x + '"][posY ="' + y + '"]'));
             this.score()
-            //createApple();
-            //score++;
-            //input.value = `Счет: ${ score }`;
-
-            //localStorage.setItem('number', score.toString());
 
         }
 
@@ -109,12 +100,6 @@ class Snake {
             console.log('!!!!!')
             this.stop()
             
-              //  alert(`Игра оконченаю. Счет: ${score}`);
-            //}//, 200)
-
-            //clearInterval(interval);
-            //snakeBody[0].style.backgroundColor = "blue";
-
         }
 
         this.snakeBody[0].classList.add('snakeHead');
@@ -129,23 +114,18 @@ class Snake {
 
     control() {
         document.addEventListener("keydown", (e) => {
-            //console.log(e.code)
             if (this.steps == true) {
                 if (e.keyCode == 37 && this.direction != 'right') {
                     this.direction = 'left';
                     this.steps = false;
-                    console.log('left');
                 } else if (e.keyCode == 38 && this.direction != 'down') {
                     this.direction = 'up';
                     this.steps = false;
-                    // console.log('up');
                 } else if (e.keyCode == 39 && this.direction != 'left') {
                     this.direction = 'right';
                     this.steps = false;
-                    // console.log('right');
                 } else if (e.keyCode == 40 && this.direction != 'up') {
                     this.direction = 'down';
-                    this.steps = false;
                     //console.log('down');
                 }
             }

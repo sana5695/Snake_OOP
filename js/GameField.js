@@ -53,7 +53,6 @@ class GameField {
         }
 
         for (let i = 0; i < this.cell.length; i++) {
-            //console.log(this.cell.length)
             if (this.x > this.width) {
                 this.x = 1;
                 this.y--;
@@ -61,8 +60,6 @@ class GameField {
             this.cell[i].setAttribute('posX', this.x);
             this.cell[i].setAttribute('posY', this.y);
             this.x++;
-            //console.log(this.y)
-            //console.log(this.x)
             console.log(this.cell.length)
         }
 

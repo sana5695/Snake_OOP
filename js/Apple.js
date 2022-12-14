@@ -34,10 +34,8 @@ class Apple {
 
     remove(){
         console.log(this)
-        //.eat = document.querySelector('.apple')
        this.apple.eat.classList.remove('apple');
        this.apple.randomPosition();
-       //this.apple.draw()
     }
 
 }

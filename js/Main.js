@@ -28,17 +28,12 @@ class Main {
     
 
     update() {
-        // console.log(12)
         this.snake.update(this.apple, this.score, this.gameField);
-        //console.log(1)
-        //обновленние данных
     }
 
 
     draw() {
-        //this.gameField.context.clearRect(0, 0, this.gameField.element.width, this.gameField.element.height);
         this.apple.draw();
-        //this.gameField.draw()
         this.snake.draw();
         
         
