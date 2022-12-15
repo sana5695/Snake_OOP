@@ -5,7 +5,7 @@ class Score{
         this.score = score;
         this.highScore = highScore
         this.draw();
-        record = document.querySelector('.local')
+        //record = document.querySelector('.local')
 
     }
     

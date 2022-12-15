@@ -126,7 +126,7 @@ class Snake {
                     this.steps = false;
                 } else if (e.keyCode == 40 && this.direction != 'up') {
                     this.direction = 'down';
-                    //console.log('down');
+                    this.steps = false;
                 }
             }
         });
